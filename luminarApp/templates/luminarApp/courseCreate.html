@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>courseCreate</title>
+</head>
+<body>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Create">
+</form>
+<table>
+    <tr>
+        <td>Course Name</td>
+        <td>Course Duration</td>
+    </tr>
+    {%for i in course%}
+    <tr>
+        <td>{{i.course_name}}</td>
+        <td>{{i.course_duration}}</td>
+        <td><a href="{%url 'courseedit' i.id%}">Edit</a></td>
+        <td><a href="{%url 'coursedelete' i.id%}">Delete</a></td>
+
+    </tr>
+    {%endfor%}
+
+</table>
+</body>
+</html>
