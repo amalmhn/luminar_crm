@@ -57,3 +57,33 @@ class CourseDeleteView(TemplateView):
         course = self.get_object(id)
         course.delete()
         return redirect('coursecreate')
+
+class HomeView(TemplateView):
+    template_name = 'luminarApp/home.html'
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name)
+
+class CenterHeadView(TemplateView):
+    template_name = 'luminarApp/centerHead.html'
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name)
+
+class BatchCreateView(TemplateView):
+    model = Batch
+    form_class = BatchCreateForm
+    template_name = 'luminarApp/batchCreate.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        batch = self.model.objects.all()
+        self.context['form'] = form
+        self.context['batch'] = batch
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('batchcreate')
+        else:
+            return render(request,self.template_name,self.context)

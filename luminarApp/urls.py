@@ -20,6 +20,9 @@ urlpatterns = [
     path('coursecreate',CourseCreateView.as_view(),name='coursecreate'),
     path('courseedit/<int:pk>',CourseEditView.as_view(),name='courseedit'),
     path('coursedelete/<int:pk>',CourseDeleteView.as_view(),name='coursedelete'),
+    path('home',HomeView.as_view(),name='home'),
+    path('centerhead',CenterHeadView.as_view(),name='centerhead'),
+    path('batchcreate',BatchCreateView.as_view(),name='batchcreate'),
 
 
 ]

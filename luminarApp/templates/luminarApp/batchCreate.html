@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Batch Create</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+</head>
+<body>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Create">
+</form>
+{%if batch%}
+<table>
+    <tr>
+        <td>Batch Code</td>
+        <td>Course</td>
+        <td>Batch date</td>
+        <td>Course Fees</td>
+        <td>Batch Status</td>
+    </tr>
+    {%for i in batch%}
+    <tr>
+        <td>{{i.batch_code}}</td>
+        <td>{{i.course}}</td>
+        <td>{{i.batch_date}}</td>
+        <td>{{i.course_fees}}</td>
+        <td>{{i.batch_status}}</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endif%}
+</body>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+</html>
