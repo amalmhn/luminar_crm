@@ -1,7 +1,7 @@
 
 from django import forms
 from .models import *
-from django.forms import ModelForm,Textarea,TextInput
+from django.forms import ModelForm,Textarea,TextInput,SelectMultiple
 
 class CourseCreateForm(ModelForm):
     class Meta:
@@ -14,11 +14,28 @@ class BatchCreateForm(ModelForm):
         fields = '__all__'
         widgets = {
             'batch_code': forms.TextInput(attrs={'class': 'form-control'}),
-            'course': forms.TextInput(attrs={'class': 'form-control'}),
+            'course': forms.Select(attrs={'class': 'form-control'}),
             'batch_date': forms.TextInput(attrs={'class': 'form-control'}),
             'course_fees': forms.TextInput(attrs={'class': 'form-control'}),
-            'batch_status': forms.TextInput(attrs={'class': 'form-control'}),
+            'batch_status': forms.Select(attrs={'class': 'form-control'}),
         }
 
-        def clean(self):
-            print("hellp")
+class EnquiryCreateForm(ModelForm):
+    class Meta:
+        model = Enquiry
+        fields = '__all__'
+        widgets = {
+            'enquiryId': forms.TextInput(attrs={'class': 'form-control'}),
+            'student_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.Textarea(attrs={'class': 'form-control'}),
+            'qualification': forms.TextInput(attrs={'class': 'form-control'}),
+            'collegename': forms.TextInput(attrs={'class': 'form-control'}),
+            'course': forms.Select(attrs={'class': 'form-control'}),
+            'batch': forms.Select(attrs={'class': 'form-control'}),
+            'contact': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'enquirydate': forms.TextInput(attrs={'class': 'form-control'}),
+            'followup_date': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+
+        }

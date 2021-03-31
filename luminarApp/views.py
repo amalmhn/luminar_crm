@@ -87,3 +87,49 @@ class BatchCreateView(TemplateView):
             return redirect('batchcreate')
         else:
             return render(request,self.template_name,self.context)
+
+class BatchEditView(TemplateView):
+    model = Batch
+    form_class = BatchCreateForm
+    template_name = 'luminarApp/batchedit.html'
+    context = {}
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        batch = self.get_object(id)
+        form = self.form_class(instance=batch)
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        batch = self.get_object(id)
+        form = self.form_class(request.POST,instance=batch)
+        if form.is_valid():
+            form.save()
+            return redirect('batchcreate')
+        else:
+            return render(request, self.template_name, self.context)
+
+class BatchDeleteView(TemplateView):
+    model = Batch
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        batch = self.get_object(id)
+        batch.delete()
+        return redirect('batchcreate')
+
+class EnquiryCreateView(TemplateView):
+    model = Enquiry
+    form_class = EnquiryCreateForm
+    template_name = 'luminarApp/enquirycreate.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        enquiry = self.model.objects.all()
+        self.context['form'] = form
+        self.context['enquiry'] = enquiry
+        return render(request,self.template_name,self.context)

@@ -23,6 +23,9 @@ urlpatterns = [
     path('home',HomeView.as_view(),name='home'),
     path('centerhead',CenterHeadView.as_view(),name='centerhead'),
     path('batchcreate',BatchCreateView.as_view(),name='batchcreate'),
+    path('batchedit/<int:pk>',BatchEditView.as_view(),name='batchedit'),
+    path('batchdelete/<int:pk>',BatchDeleteView.as_view(),name='batchdelete'),
+    path('enquirycreate',EnquiryCreateView.as_view(),name='enquirycreate'),
 
 
 ]

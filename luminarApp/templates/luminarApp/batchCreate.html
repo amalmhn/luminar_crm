@@ -29,6 +29,8 @@
         <td>{{i.batch_date}}</td>
         <td>{{i.course_fees}}</td>
         <td>{{i.batch_status}}</td>
+        <td><a href="{%url 'batchedit' i.id%}">Edit</a></td>
+        <td><a href="{%url 'batchdelete' i.id%}">Delete</a></td>
     </tr>
     {%endfor%}
 </table>
