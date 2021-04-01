@@ -61,3 +61,23 @@ class Payment(models.Model):
     def __str__(self):
         return self.amount
 
+class EnquiryThree(models.Model):
+    enquiryId = models.CharField(max_length=50)
+    student_name = models.CharField(max_length=100)
+    address = models.TextField()
+    qualification = models.CharField(max_length=50)
+    collegename = models.CharField(max_length=100)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    batch = models.ForeignKey(Batch, on_delete=models.CASCADE)
+    contact = models.IntegerField()
+    email = models.EmailField(unique=True)
+    enquirydate = models.DateField(default=date.today())
+    followup_date = models.DateField()
+    action = {
+        ('1', 'Call back'),
+        ('2', 'Admitted'),
+        ('3', 'Cancel'),
+    }
+    status = models.CharField(max_length=20,choices=action)
+    def __str__(self):
+        return str(self.enquiryId)

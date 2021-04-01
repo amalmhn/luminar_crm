@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Enquiry Create</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
 <form action="" method="post">
@@ -11,4 +14,33 @@
     <input type="submit" value="Create">
 </form>
 </body>
+<table>
+    <tr>
+        <td>enquiryId</td>
+        <td>student_name</td>
+        <td>address</td>
+        <td>qualification</td>
+        <td>collegename</td>
+        <td>course</td>
+        <td>batch</td>
+        <td>contact</td>
+        <td>email</td>
+        <td>enquirydate</td>
+        <td>followup_date</td>
+        <td>status</td></tr>
+    {%for i in enquiry%}
+    <td>{{i.enquiryId}}</td>
+        <td>{{i.student_name}}</td>
+        <td>{{i.address}}</td>
+        <td>{{i.qualification}}</td>
+        <td>{{i.collegename}}</td>
+        <td>{{i.course}}</td>
+        <td>{{i.batch}}</td>
+        <td>{{i.contact}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.enquirydate}}</td>
+        <td>{{i.followup_date}}</td>
+        <td>{{i.status}}</td></tr>
+    {%endfor%}
+</table>
 </html>

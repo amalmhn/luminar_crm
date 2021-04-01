@@ -133,3 +133,12 @@ class EnquiryCreateView(TemplateView):
         self.context['form'] = form
         self.context['enquiry'] = enquiry
         return render(request,self.template_name,self.context)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            print('saved')
+            return redirect('enquirycreate')
+        else:
+            print('not saved')
+            return render(request, self.template_name, self.context)
