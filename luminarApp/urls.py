@@ -26,6 +26,14 @@ urlpatterns = [
     path('batchedit/<int:pk>',BatchEditView.as_view(),name='batchedit'),
     path('batchdelete/<int:pk>',BatchDeleteView.as_view(),name='batchdelete'),
     path('enquirycreate',EnquiryCreateView.as_view(),name='enquirycreate'),
-
+    path('enquiryedit/<int:pk>',EnquiryEditView.as_view(),name='enquiryedit'),
+    path('enquirydelete/<int:pk>',EnquiryDeleteView.as_view(),name='enquirydelete'),
+    path('admissioncreate',AdmissionCreateView.as_view(),name='admissioncreate'),
+    path('admissionedit/<int:pk>',AdmissionEditView.as_view(),name='admissionedit'),
+    path('admissiondelete/<int:pk>',AdmissionDeleteView.as_view(),name='admissiondelete'),
+    path('paymentcreate',PaymentCreateView.as_view(),name='paymentcreate'),
+    path('paymentedit/<int:pk>',PaymentEditView.as_view(),name='paymentedit'),
+    path('paymentdelete/<int:pk>',PaymentDeleteView.as_view(),name='paymentdelete'),
+    path('counselor',CounselorView.as_view(),name='counselor'),
 
 ]

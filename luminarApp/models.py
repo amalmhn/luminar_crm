@@ -73,11 +73,6 @@ class EnquiryThree(models.Model):
     email = models.EmailField(unique=True)
     enquirydate = models.DateField(default=date.today())
     followup_date = models.DateField()
-    action = {
-        ('1', 'Call back'),
-        ('2', 'Admitted'),
-        ('3', 'Cancel'),
-    }
-    status = models.CharField(max_length=20,choices=action)
+     
     def __str__(self):
         return str(self.enquiryId)

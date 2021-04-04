@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admission Create</title>
+</head>
+<body>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="Create">
+</form>
+<table>
+    <tr>
+        <td>admission_no</td>
+        <td>enquiryid</td>
+        <td>coursefees</td>
+        <td>batchcode</td>
+        <td>date</td>
+    </tr>
+    {%for i in admission%}
+    <tr>
+        <td>{{i.admission_no}}</td>
+        <td>{{i.enquiryid}}</td>
+        <td>{{i.coursefees}}</td>
+        <td>{{i.batchcode}}</td>
+        <td>{{i.date}}</td>
+        <td><a href="{%url 'admissionedit' i.id%}">Edit</a></td>
+        <td><a href="{%url 'admissiondelete' i.id%}">Delete</a></td>
+    </tr>
+    {%endfor%}
+</table>
+</body>
+</html>

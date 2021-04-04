@@ -22,7 +22,17 @@ class BatchCreateForm(ModelForm):
 
 class EnquiryCreateForm(ModelForm):
     class Meta:
-        model = Enquiry
+        model = EnquiryThree
+        fields = '__all__'
+
+class AdmissionCreateForm(ModelForm):
+    class Meta:
+        model = Admission
+        fields = '__all__'
+
+class PaymentCreateForm(ModelForm):
+    class Meta:
+        model = Payment
         fields = '__all__'
 
 
