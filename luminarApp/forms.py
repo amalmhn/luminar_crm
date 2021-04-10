@@ -2,6 +2,9 @@
 from django import forms
 from .models import *
 from django.forms import ModelForm,Textarea,TextInput,SelectMultiple
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class CourseCreateForm(ModelForm):
     class Meta:
@@ -34,6 +37,19 @@ class PaymentCreateForm(ModelForm):
     class Meta:
         model = Payment
         fields = '__all__'
+
+
+class RegistrationForm(UserCreationForm):
+  class Meta:
+      model = User
+      fields = ['username', 'password1', 'password2','first_name','last_name','email']
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=120)
+    password = forms.CharField(max_length=130)
+
+
+
 
 
 

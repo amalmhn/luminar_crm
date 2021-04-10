@@ -1,7 +1,14 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from .models import *
 from django.views.generic import TemplateView
+from .forms import RegistrationForm
+from django.views.generic.edit import CreateView
+from django.contrib.auth.models import User
 # Create your views here.
 
 class CourseCreateView(TemplateView):
@@ -58,6 +65,7 @@ class CourseDeleteView(TemplateView):
         course.delete()
         return redirect('coursecreate')
 
+# @login_required
 class HomeView(TemplateView):
     template_name = 'luminarApp/home.html'
     def get(self, request, *args, **kwargs):
@@ -289,3 +297,62 @@ class CounselorView(TemplateView):
     template_name = 'luminarApp/counselor.html'
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
+
+
+class RegistrationView(TemplateView):
+    form_class = RegistrationForm
+    form_class2 = LoginForm
+    template_name = 'luminarApp/registration.html'
+    model = User
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            self.context['form'] = self.form_class2
+            return render(request,'luminarApp/login.html',self.context)
+        else:
+            self.context['form'] = form
+            return render(request, self.template_name, self.context)
+
+class LoginView(TemplateView):
+    template_name = 'luminarApp/login.html'
+    form_class = LoginForm
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data.get('username')
+            pwd = form.cleaned_data.get('password')
+            user = authenticate(username=uname,password=pwd)
+            if uname=='luminaruser':
+                if user!=None:
+                    login(request,user)
+                    return redirect('centerhead')
+                else:
+                    form = self.form_class(request.POST)
+                    self.context['form'] = form
+                    return render(request, self.template_name, self.context)
+            else:
+                if user!=None:
+                    login(request, user)
+                    return redirect('counselor')
+
+            # if user!=None:
+            #     login(request,user)
+            #     return redirect('home')
+
+class LogoutView(TemplateView):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('home')

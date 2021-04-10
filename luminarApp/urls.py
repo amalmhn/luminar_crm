@@ -35,5 +35,8 @@ urlpatterns = [
     path('paymentedit/<int:pk>',PaymentEditView.as_view(),name='paymentedit'),
     path('paymentdelete/<int:pk>',PaymentDeleteView.as_view(),name='paymentdelete'),
     path('counselor',CounselorView.as_view(),name='counselor'),
+    path('register',RegistrationView.as_view(),name='register'),
+    path('signin',LoginView.as_view(),name='signin'),
+
 
 ]
