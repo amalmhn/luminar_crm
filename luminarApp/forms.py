@@ -48,8 +48,15 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=120)
     password = forms.CharField(max_length=130)
 
+class EmployeeForm(ModelForm):
+    class Meta:
+        model = EmployeeModel
+        fields = '__all__'
 
-
+class StudentForm(ModelForm):
+    class Meta:
+        model = StudentModel
+        fields = '__all__'
 
 
 

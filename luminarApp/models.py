@@ -61,6 +61,11 @@ class Payment(models.Model):
     def __str__(self):
         return self.amount
 
+class ChoiceModel(models.Model):
+    action = models.CharField(max_length=150)
+    def __str__(self):
+        return str(self.action)
+
 class EnquiryThree(models.Model):
     enquiryId = models.CharField(max_length=50)
     student_name = models.CharField(max_length=100)
@@ -73,6 +78,25 @@ class EnquiryThree(models.Model):
     email = models.EmailField(unique=True)
     enquirydate = models.DateField(default=date.today())
     followup_date = models.DateField()
+    choice = models.ForeignKey(ChoiceModel,on_delete=models.CASCADE)
      
     def __str__(self):
         return str(self.enquiryId)
+
+class EmployeeModel(models.Model):
+    employee_id = models.CharField(max_length=50)
+    employee_name = models.CharField(max_length=150)
+    subject = models.CharField(max_length=150)
+    salary = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.employee_id)
+
+class StudentModel(models.Model):
+    student_id = models.CharField(max_length=50)
+    student_name = models.CharField(max_length=150)
+    course = models.CharField(max_length=150)
+    total_fees = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.student_id)

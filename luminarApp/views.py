@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .forms import *
 from .models import *
 from django.views.generic import TemplateView
@@ -65,12 +67,16 @@ class CourseDeleteView(TemplateView):
         course.delete()
         return redirect('coursecreate')
 
-# @login_required
+
+
+
+
 class HomeView(TemplateView):
     template_name = 'luminarApp/home.html'
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
 
+    # @method_decorator(login_required,name='centerhead')
 class CenterHeadView(TemplateView):
     template_name = 'luminarApp/centerHead.html'
     def get(self, request, *args, **kwargs):
@@ -314,8 +320,9 @@ class RegistrationView(TemplateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            self.context['form'] = self.form_class2
-            return render(request,'luminarApp/login.html',self.context)
+            # self.context['form'] = self.form_class2
+            # return render(request,'luminarApp/login.html',self.context)
+            return redirect('signin')
         else:
             self.context['form'] = form
             return render(request, self.template_name, self.context)
@@ -356,3 +363,115 @@ class LogoutView(TemplateView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect('home')
+
+class EmployeeView(TemplateView):
+    model = EmployeeModel
+    form_class = EmployeeForm
+    template_name = 'luminarApp/employeecreate.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        employee = self.model.objects.all()
+        self.context['form'] = form
+        self.context['employee'] = employee
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('employeecreate')
+        else:
+            return render(request,self.template_name,self.context)
+
+class EmployeeEditView(TemplateView):
+    model = EmployeeModel
+    form_class = EmployeeForm
+    template_name = 'luminarApp/employeeedit.html'
+    context={}
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+
+    def get(self, request, *args, **kwargs):
+        id=kwargs.get('pk')
+        employee = self.get_object(id)
+        form = self.form_class(instance=employee)
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        employee = self.get_object(id)
+        form = self.form_class(request.POST,instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('employeecreate')
+        else:
+            return render(request,self.template_name,self.context)
+
+class EmployeeDeleteView(TemplateView):
+    model = EmployeeModel
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        employee = self.get_object(id)
+        employee.delete()
+        return redirect('employeecreate')
+
+class StudentView(TemplateView):
+    model = StudentModel
+    form_class = StudentForm
+    template_name = 'luminarApp/studentcreate.html'
+    context = {}
+    def get(self, request, *args, **kwargs):
+        form = self.form_class
+        student = self.model.objects.all()
+        self.context['form'] = form
+        self.context['student'] = student
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('studentcreate')
+        else:
+            return render(request,self.template_name,self.context)
+
+class StudentEditView(TemplateView):
+    model = StudentModel
+    form_class = StudentForm
+    template_name = 'luminarApp/studentedit.html'
+    context={}
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+
+    def get(self, request, *args, **kwargs):
+        id=kwargs.get('pk')
+        student = self.get_object(id)
+        form = self.form_class(instance=student)
+        self.context['form'] = form
+        return render(request,self.template_name,self.context)
+
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        student = self.get_object(id)
+        form = self.form_class(request.POST,instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('studentcreate')
+        else:
+            return render(request,self.template_name,self.context)
+
+class EmployeeDeleteView(TemplateView):
+    model = EmployeeModel
+    def get_object(self,id):
+        return self.model.objects.get(id=id)
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        employee = self.get_object(id)
+        employee.delete()
+        return redirect('employeecreate')
+
+

@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import *
+from django.contrib.auth.decorators import login_required
+from luminarApp import views
 urlpatterns = [
     path('coursecreate',CourseCreateView.as_view(),name='coursecreate'),
     path('courseedit/<int:pk>',CourseEditView.as_view(),name='courseedit'),
@@ -37,6 +39,10 @@ urlpatterns = [
     path('counselor',CounselorView.as_view(),name='counselor'),
     path('register',RegistrationView.as_view(),name='register'),
     path('signin',LoginView.as_view(),name='signin'),
-
-
+    path('signout',LogoutView.as_view(),name='signout'),
+    path('employeecreate',EmployeeView.as_view(),name='employeecreate'),
+    path('employeeedit/<int:pk>',EmployeeEditView.as_view(),name='employeeedit'),
+    path('employeedelete/<int:pk>',EmployeeDeleteView.as_view(),name='employeedelete'),
+    path('studentcreate',StudentView.as_view(),name='studentcreate'),
+    path('studentedit/<int:pk>',StudentEditView.as_view(),name='studentedit'),
 ]
