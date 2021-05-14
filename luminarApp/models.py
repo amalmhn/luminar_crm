@@ -26,7 +26,7 @@ class Batch(models.Model):
 class Enquiry(models.Model):
     enquiryId = models.CharField(primary_key=True, editable=False , max_length=150)
     student_name = models.CharField(max_length=100)
-    address = models.TextField()
+    address = models.CharField(max_length=300)
     qualification = models.CharField(max_length=50)
     collegename = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -44,14 +44,7 @@ class Enquiry(models.Model):
     def __str__(self):
         return str(self.enquiryId)
 
-class Admission(models.Model):
-    admission_no = models.CharField(max_length=50,unique=True)
-    enquiryid = models.CharField(max_length=50)
-    coursefees = models.IntegerField()
-    batchcode = models.ForeignKey(Batch, on_delete=models.CASCADE)
-    date = models.DateField(default=date.today())
-    def __str__(self):
-        return self.admission_no
+
 
 class Payment(models.Model):
     admission_no = models.CharField(max_length=50)
@@ -69,7 +62,7 @@ class ChoiceModel(models.Model):
 class EnquiryThree(models.Model):
     enquiryId = models.CharField(max_length=50)
     student_name = models.CharField(max_length=100)
-    address = models.TextField()
+    address = models.CharField(max_length=300)
     qualification = models.CharField(max_length=50)
     collegename = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -82,6 +75,15 @@ class EnquiryThree(models.Model):
      
     def __str__(self):
         return str(self.enquiryId)
+
+class Admission(models.Model):
+    admission_no = models.CharField(max_length=50,unique=True)
+    enquiryid = models.ForeignKey(EnquiryThree, on_delete=models.CASCADE)
+    coursefees = models.IntegerField()
+    batchcode = models.ForeignKey(Batch, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today())
+    def __str__(self):
+        return self.admission_no
 
 class EmployeeModel(models.Model):
     employee_id = models.CharField(max_length=50)

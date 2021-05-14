@@ -1,20 +1,15 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+{%extends 'luminarApp/centerHead.html'%}
+{%block body_block%}
 <body>
 <form action="" method="post">
     {%csrf_token%}
     {{form.as_p}}
     <input type="submit" value="Create">
 </form>
-</body>
-<table>
+
+<table class="table">
     <tr>
         <td>enquiryId</td>
         <td>student_name</td>
@@ -28,7 +23,7 @@
         <td>enquirydate</td>
         <td>followup_date</td>
         <td>status</td></tr>
-    {%for i in enquiry%}
+    {%for i in enq%}
     <td>{{i.enquiryId}}</td>
         <td>{{i.student_name}}</td>
         <td>{{i.address}}</td>
@@ -41,11 +36,13 @@
         <td>{{i.enquirydate}}</td>
         <td>{{i.followup_date}}</td>
         <td>{{i.choice}}</td>
-    <td><a href="{%url 'enquiryedit' i.id%}">Edit</a></td>
-    <td><a href="{%url 'enquirydelete' i.id%}">Delete</a></td>
+    <td><a href="{%url 'enquiryedit' i.id%}" class="btn btn-primary">Edit</a></td>
+    <td><a href="{%url 'enquirydelete' i.id%}" class="btn btn-danger">Delete</a></td>
 
     </tr>
 
     {%endfor%}
 </table>
+</body>
+{%endblock%}
 </html>

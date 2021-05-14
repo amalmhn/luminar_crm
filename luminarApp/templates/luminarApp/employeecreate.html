@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{%extends 'luminarApp/centerHead.html'%}
+{%block body_block%}
 <body>
 <form action="" method="post">
     {%csrf_token%}
     {{form.as_p}}
     <input type="submit" value="Create">
 </form>
-<table>
+<table class="table">
     <tr>
         <td>Employee ID</td>
         <td>Employee name</td>
@@ -23,10 +20,11 @@
         <td>{{emp.employee_name}}</td>
         <td>{{emp.subject}}</td>
         <td>{{emp.salary}}</td>
-        <td><a href="{%url 'employeeedit' emp.id%}">Edit</a></td>
-        <td><a href="{%url 'employeedelete' emp.id%}">Delete</a></td>
+        <td><a href="{%url 'employeeedit' emp.id%}" class="btn btn-primary">Edit</a></td>
+        <td><a href="{%url 'employeedelete' emp.id%}" class="btn btn-danger">Delete</a></td>
     </tr>
     {%endfor%}
 </table>
 </body>
+{%endblock%}
 </html>

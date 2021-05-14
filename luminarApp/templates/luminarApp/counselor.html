@@ -139,7 +139,7 @@
                                     </a>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <a style="text-decoration:none;" href="">
+                                <a style="text-decoration:none;" href="{%url 'studentcreate'%}">
                                 <div class="card bg-danger text-white mb-4">
                                     <div class="card-body">Student Details</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -161,42 +161,32 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>Student ID</th>
+                                                <th>Student name</th>
+                                                <th>Course</th>
+                                                <th>Fees</th>
+
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>Student ID</th>
+                                                <th>Student name</th>
+                                                <th>Course</th>
+                                                <th>Fees</th>
+
                                             </tr>
                                         </tfoot>
                                         <tbody>
+                                        {%for stu in student%}
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                        <tr>
-                                                <td>Abc Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
+                                                <td>{{stu.student_id}}</td>
+                                                <td>{{stu.student_name}}</td>
+                                                <td>{{stu.course}}</td>
+                                                <td>{{stu.total_fees}}</td>
 
+                                            </tr>
+                                        {%endfor%}
                                         </tbody>
                                     </table>
                                 </div>

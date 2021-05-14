@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Payment Edit</title>
-</head>
+{%extends 'luminarApp/centerHead.html'%}
+{%block body_block%}
 <body>
 <form action="" method="post">
     {%csrf_token%}
@@ -11,4 +8,5 @@
     <input type="submit" value="Edit">
 </form>
 </body>
+{%endblock%}
 </html>
