@@ -18,7 +18,7 @@ class CourseCreateForm(ModelForm):
 
 class BatchCreateForm(ModelForm):
     class Meta:
-        model = Batch
+        model = BatchModelNew
         fields = '__all__'
         widgets = {
             'batch_code': forms.TextInput(attrs={'class': 'form-control'}),
@@ -49,7 +49,7 @@ class EnquiryCreateForm(ModelForm):
 
 class AdmissionCreateForm(ModelForm):
     class Meta:
-        model = Admission
+        model = AdmissionNewModel
         fields = '__all__'
         widgets = {
             'admission_no': forms.TextInput(attrs={'class': 'form-control'}),
@@ -62,13 +62,13 @@ class AdmissionCreateForm(ModelForm):
 
 class PaymentCreateForm(ModelForm):
     class Meta:
-        model = Payment
+        model = PaymentNewModel
         fields = '__all__'
         widgets = {
-            'admission_no': forms.TextInput(attrs={'class': 'form-control'}),
+            'admission_no': forms.Select(attrs={'class': 'form-control'}),
             'amount': forms.NumberInput(attrs={'class': 'form-control'}),
             'payment_date': forms.DateInput(attrs={'class': 'form-control'}),
-            'enquiryid': forms.TextInput(attrs={'class': 'form-control'}),
+            'enquiryid': forms.Select(attrs={'class': 'form-control'}),
             # 'date': forms.DateInput(attrs={'class': 'form-control'}),
 
         }
@@ -114,7 +114,7 @@ class StudentForm(ModelForm):
         fields = '__all__'
         widgets = {
             'student_id': forms.TextInput(attrs={'class': 'form-control'}),
-            'student_name': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'student_name': forms.TextInput(attrs={'class': 'form-control'}),
             'course': forms.TextInput(attrs={'class': 'form-control'}),
             'total_fees': forms.TextInput(attrs={'class': 'form-control'}),
 

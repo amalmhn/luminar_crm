@@ -4,3 +4,6 @@ from .models import *
 
 admin.site.register(ChoiceModel)
 admin.site.register(EnquiryThree)
+admin.site.register(BatchStatus)
+admin.site.register(Admissions)
+admin.site.register(Batch)

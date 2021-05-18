@@ -70,13 +70,15 @@ class CourseDeleteView(TemplateView):
 
 
 
-
+# @method_decorator(login_required,name='dispatch')
 class HomeView(TemplateView):
     template_name = 'luminarApp/home.html'
     def get(self, request, *args, **kwargs):
-        return render(request,self.template_name)
+        # if request.user.is_authenticated():
+            return render(request,self.template_name)
 
-    # @method_decorator(login_required,name='centerhead')
+
+@method_decorator(login_required, name='dispatch')
 class CenterHeadView(TemplateView):
     model = EmployeeModel
     template_name = 'luminarApp/centerHead.html'
@@ -87,15 +89,23 @@ class CenterHeadView(TemplateView):
         return render(request,self.template_name,self.context)
 
 class BatchCreateView(TemplateView):
-    model = Batch
+    model = BatchModelNew
     form_class = BatchCreateForm
     template_name = 'luminarApp/batchCreate.html'
     context = {}
     def get(self, request, *args, **kwargs):
-        form = self.form_class
-        batch = self.model.objects.all()
+        bat = self.model.objects.all()
+        batch = self.model.objects.last()
+        if batch:
+            last_batch_code = batch.batch_code
+            lst = int(last_batch_code)+1
+            batch_code = str(lst)
+        else:
+            batch_code = '700'
+
+        form = self.form_class(initial={"batch_code":batch_code})
         self.context['form'] = form
-        self.context['batch'] = batch
+        self.context['batch'] = bat
         return render(request,self.template_name,self.context)
 
     def post(self, request, *args, **kwargs):
@@ -107,7 +117,7 @@ class BatchCreateView(TemplateView):
             return render(request,self.template_name,self.context)
 
 class BatchEditView(TemplateView):
-    model = Batch
+    model = BatchModelNew
     form_class = BatchCreateForm
     template_name = 'luminarApp/batchedit.html'
     context = {}
@@ -131,7 +141,7 @@ class BatchEditView(TemplateView):
             return render(request, self.template_name, self.context)
 
 class BatchDeleteView(TemplateView):
-    model = Batch
+    model = BatchModelNew
     def get_object(self,id):
         return self.model.objects.get(id=id)
     def get(self, request, *args, **kwargs):
@@ -205,7 +215,7 @@ class EnquiryDeleteView(TemplateView):
         return redirect('enquirycreate')
 
 class AdmissionCreateView(TemplateView):
-    model = Admission
+    model = AdmissionNewModel
     form_class = AdmissionCreateForm
     template_name = 'luminarApp/admissioncreate.html'
     context = {}
@@ -234,7 +244,7 @@ class AdmissionCreateView(TemplateView):
             return render(request, self.template_name, self.context)
 
 class AdmissionEditView(TemplateView):
-    model = Admission
+    model = AdmissionNewModel
     form_class = AdmissionCreateForm
     template_name = 'luminarApp/admissionedit.html'
     context = {}
@@ -258,7 +268,7 @@ class AdmissionEditView(TemplateView):
             return render(request, self.template_name, self.context)
 
 class AdmissionDeleteView(TemplateView):
-    model = Admission
+    model = AdmissionNewModel
     def get_object(self,id):
         return self.model.objects.get(id=id)
     def get(self, request, *args, **kwargs):
@@ -268,7 +278,7 @@ class AdmissionDeleteView(TemplateView):
         return redirect('admissioncreate')
 
 class PaymentCreateView(TemplateView):
-    model = Payment
+    model = PaymentNewModel
     form_class = PaymentCreateForm
     template_name = 'luminarApp/paymentcreate.html'
     context = {}
@@ -288,7 +298,7 @@ class PaymentCreateView(TemplateView):
             return render(request,self.template_name,self.context)
 
 class PaymentEditView(TemplateView):
-    model = Payment
+    model = PaymentNewModel
     form_class = PaymentCreateForm
     template_name = 'luminarApp/paymentedit.html'
     context = {}
@@ -312,7 +322,7 @@ class PaymentEditView(TemplateView):
             return render(request, self.template_name, self.context)
 
 class PaymentDeleteView(TemplateView):
-    model = Payment
+    model = PaymentNewModel
     def get_object(self,id):
         return self.model.objects.get(id=id)
     def get(self, request, *args, **kwargs):
@@ -321,6 +331,7 @@ class PaymentDeleteView(TemplateView):
         payment.delete()
         return redirect('paymentcreate')
 
+@method_decorator(login_required, name='dispatch')
 class CounselorView(TemplateView):
     model = StudentModel
     template_name = 'luminarApp/counselor.html'
@@ -396,10 +407,18 @@ class EmployeeView(TemplateView):
     template_name = 'luminarApp/employeecreate.html'
     context = {}
     def get(self, request, *args, **kwargs):
-        form = self.form_class
-        employee = self.model.objects.all()
+        emp = self.model.objects.all()
+        employee = self.model.objects.last()
+        if employee:
+            last_employee_id = employee.employee_id
+            lst = int(last_employee_id)+1
+            employee_id = str(lst)
+        else:
+            employee_id = 200
+
+        form = self.form_class(initial={"employee_id":employee_id})
         self.context['form'] = form
-        self.context['employee'] = employee
+        self.context['emplo'] = emp
         return render(request,self.template_name,self.context)
 
     def post(self, request, *args, **kwargs):
@@ -451,10 +470,18 @@ class StudentView(TemplateView):
     template_name = 'luminarApp/studentcreate.html'
     context = {}
     def get(self, request, *args, **kwargs):
-        form = self.form_class
-        student = self.model.objects.all()
+        stud = self.model.objects.all()
+        student = self.model.objects.last()
+        if student:
+            last_student_id = student.student_id
+            lst = int(last_student_id)+1
+            student_id = str(lst)
+        else:
+            student_id = '300'
+
+        form = self.form_class(initial={"student_id":student_id})
         self.context['form'] = form
-        self.context['student'] = student
+        self.context['stud'] = stud
         return render(request,self.template_name,self.context)
 
     def post(self, request, *args, **kwargs):

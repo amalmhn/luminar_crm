@@ -9,17 +9,27 @@ class Course(models.Model):
     def __str__(self):
         return self.course_name
 
+class BatchStatus(models.Model):
+    choice = models.CharField(max_length=120)
+    def __str__(self):
+        return self.choice
+
+class BatchModelNew(models.Model):
+    batch_code = models.CharField(max_length=50, unique=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    batch_date = models.DateField(default=date.today())
+    course_fees = models.CharField(max_length=50)
+    batch_status = models.ForeignKey(BatchStatus, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.batch_code
+
 class Batch(models.Model):
     batch_code = models.CharField(max_length=50, unique=True)
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
     batch_date = models.DateField(default=date.today())
     course_fees = models.CharField(max_length=50)
-    action={
-        ('1','Yet to Begin'),
-        ('2', 'Ongoing'),
-        ('3', 'Completed'),
-    }
-    batch_status = models.CharField(max_length=30,choices=action)
+    batch_status = models.ForeignKey(BatchStatus,on_delete=models.CASCADE)
     def __str__(self):
         return self.batch_code
 
@@ -46,13 +56,7 @@ class Enquiry(models.Model):
 
 
 
-class Payment(models.Model):
-    admission_no = models.CharField(max_length=50)
-    amount = models.IntegerField()
-    payment_date = models.DateField(default=date.today())
-    enquiryid = models.CharField(max_length=50)
-    def __str__(self):
-        return self.amount
+
 
 class ChoiceModel(models.Model):
     action = models.CharField(max_length=150)
@@ -72,11 +76,11 @@ class EnquiryThree(models.Model):
     enquirydate = models.DateField(default=date.today())
     followup_date = models.DateField()
     choice = models.ForeignKey(ChoiceModel,on_delete=models.CASCADE)
-     
+
     def __str__(self):
         return str(self.enquiryId)
 
-class Admission(models.Model):
+class Admissions(models.Model):
     admission_no = models.CharField(max_length=50,unique=True)
     enquiryid = models.ForeignKey(EnquiryThree, on_delete=models.CASCADE)
     coursefees = models.IntegerField()
@@ -84,6 +88,33 @@ class Admission(models.Model):
     date = models.DateField(default=date.today())
     def __str__(self):
         return self.admission_no
+
+class AdmissionNewModel(models.Model):
+    admission_no = models.CharField(max_length=50,unique=True)
+    enquiryid = models.ForeignKey(EnquiryThree, on_delete=models.CASCADE)
+    coursefees = models.IntegerField()
+    batchcode = models.ForeignKey(Batch, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today())
+
+    def __str__(self):
+        return self.admission_no
+
+class PaymentNewModel(models.Model):
+    admission_no = models.ForeignKey(AdmissionNewModel, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    payment_date = models.DateField(default=date.today())
+    enquiryid = models.ForeignKey(EnquiryThree,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.amount)
+
+class Payment(models.Model):
+    admission_no = models.ForeignKey(AdmissionNewModel,on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    payment_date = models.DateField(default=date.today())
+    enquiryid = models.CharField(max_length=50)
+    def __str__(self):
+        return self.amount
 
 class EmployeeModel(models.Model):
     employee_id = models.CharField(max_length=50)
